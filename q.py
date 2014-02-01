@@ -7,6 +7,7 @@ import scipy.io.wavfile
 import pickle
 import sys
 import pylab
+from scipy import stats
 
 def goetrzel(x, target_frequency, sample_rate):
 	s_prev = 0
@@ -23,25 +24,28 @@ def goetrzel(x, target_frequency, sample_rate):
 sample_rate, data = scipy.io.wavfile.read(sys.argv[1])
 print sample_rate
 
-length = 25000 # max freq is 10khz
-skip   = 10000 # 0.1s precision
 total = None
 
-for tf in xrange(500, 1100, 100):
+for tf in xrange(500, 10100, 100):
+
+	print tf
+	length = int(44100) # 
+	skip   = 1000 # 0.1s precision
 	
-	spec = goetrzel(data, tf, sample_rate)
 	windows = [data[start:start+length] for start in xrange(0, len(data) - length, skip)] 
 	fourier = np.array([goetrzel(w, tf, sample_rate) for w in windows], dtype=np.float64)
 	n       = len(fourier)
 	time    = np.arange(n, dtype=np.float64) / n * len(data) / sample_rate
 
-	#pylab.figure()
-	#pylab.plot(time, fourier)
-	#pylab.plot(time, [fourier.mean()] * len(time))
-	#pylab.show()
-
 	c = np.copy(fourier)
-	M = c.mean()
+	M = stats.scoreatpercentile(c, 95)
+	print c.min(), c.max(), c.mean(), M
+	
+	pylab.figure()
+	pylab.subplot(211)
+	pylab.plot(time, fourier)
+	pylab.plot(time, [M] * len(time))
+
 	idx = np.where( c > M )
 	fourier[idx] = 1
 	idx = np.where( c <= M )
@@ -53,18 +57,26 @@ for tf in xrange(500, 1100, 100):
 	else:
 		total += fourier
 
-	#pylab.figure()
-	#pylab.plot(time, total,'r') # plotting the spectrum
-	#pylab.show()
+	pylab.subplot(212)
+	pylab.plot(time, total,'r') 
+	pylab.show()
 
-	startPeakIndex  = np.argmax(total)
-	endPeakIndex = startPeakIndex
-	while total[endPeakIndex] == total[startPeakIndex]:
-		endPeakIndex += 1
-	endPeakIndex -= 1
+	peakValue = total.max()
+	startPeakIndex = 0
 
-	#print time[startPeakIndex], time[endPeakIndex], total[startPeakIndex], total[endPeakIndex]
-	midIndex = (startPeakIndex + endPeakIndex) // 2
-	print int(time[midIndex]), int(total[midIndex])
+	while startPeakIndex < len(time):
 
-	
+		if total[startPeakIndex] == peakValue:
+			endPeakIndex = startPeakIndex + 1
+			while endPeakIndex < len(time) and (total[endPeakIndex] == total[startPeakIndex]):
+				endPeakIndex += 1
+			endPeakIndex -= 1
+			duration = time[endPeakIndex] - time[startPeakIndex]
+			print "Peak duration: ", duration, "Start:", time[startPeakIndex], "Value: ", peakValue
+			
+			if duration > 1.0:
+				print int(peakValue), (time[startPeakIndex] + duration / 2.0)
+			startPeakIndex = endPeakIndex + 1
+
+		else:
+			startPeakIndex += 1
