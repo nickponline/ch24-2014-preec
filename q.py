@@ -27,17 +27,24 @@ def goertzel(samples, target_frequency, sample_rate):
 
 sample_rate, data = scipy.io.wavfile.read(sys.argv[1])
 window_length = 10100
+print len(data) / sample_rate, "seconds."
+mx = None
+
+def make_window(data, i, sample_rate, fs):
+	w = data[i * sample_rate - fs:i * sample_rate + fs]
+	return w
 
 for i in xrange(1, len(data) / sample_rate):
 	
 	window = data[i*sample_rate - window_length / 2:i*sample_rate + window_length/2]
-	freq = np.array([goertzel(window, fs * 100, sample_rate) for fs in xrange(5, 101)])
-	c = freq.mean()
+	freq = np.array([goertzel(make_window(data, i, sample_rate, fs*100), fs * 100, sample_rate) for fs in xrange(5, 101)])
+	#c = stats.scoreatpercentile(freq, 95)
+	c = 1e8
 
 	# pylab.figure()
 	# pylab.title(str(i))
 	# pylab.plot([fs*100 for fs in xrange(5, 101)], freq, 'ro')
 	# pylab.plot([fs*100 for fs in xrange(5, 101)], [c for fs in xrange(5, 101)] )
-	# pylab.show()
+	# pylab.savefig(str(i) + '.pdf')
 
 	print " Second: ", i, len(freq[freq > c])
