@@ -1,0 +1,58 @@
+<html>
+<head><title>Q. Soundtrack vs. popcorn</title></head>
+<body>
+<div align="justify">
+
+<h2>Q. Soundtrack vs. popcorn</h2>
+<table border=0 width=100% cellpadding=0 cellspacing=0>
+<tr><td align="justify">
+A well-composed soundtrack of a movie is in a very close relationship with the
+message of the movie. In fact, they are so close, that careful examination of
+the soundtrack may reveal important charasteristics about the movie.
+
+<p>
+Lately new trends appeared in music used for movies. Followers of the
+minimalistic genres use clean sine waves instead of inherently complex musical
+instruments. British researchers also found that using frequencies divisible by
+100 between 500 Hz and 10000 Hz yield the best result in popcorn sales.
+Other researchers confirm that the number of tones in the soundtrack at any
+given moment is proportional to how fascinating the scene is.
+
+<td> &nbsp;&nbsp; <td align="right">
+<img width=300 alt="The Philadelphia Orchestra; before this new style got adopted, this orchestra used to record soundtracks for movies" src="philly_orch.jpg">
+<br><font size="-3">source: http://indianapublicmedia.org/arts/bankruptcy-hits-big/ </font>
+</table>
+
+<p>
+You want to estimate the maximum popcorn flow for a movie - which is
+(as the above research indicates) proportional to the maximum number of tones
+audible simultaneously.
+
+<h3>Input</h3>
+The soundtrack is given as an 8 bit, mono wav sampled at 44100 Hz, containing a
+(rough) mix of different, n*100 Hz sine waves (5 &lt;= n &lt;= 100). Tones are
+always at least 1.2 seconds long.
+
+<h3>Output</h3>
+Two integers N and T separated by a space; N is the number of tones and
+T is the time in seconds (from the beginning of the sound track) when
+the movie is the most fascinating. If there are more, equally fascinating
+moments and/or these moments are more than 1 second long, any such moment is
+accepted as valid output.
+
+<table border="0" width="100%" cellpadding=0 cellspacing=0>
+<tr>
+<td valign=top><h3>Example input</h3>
+Please refer to 0.wav.
+
+<td valign=top><h3>Example output</h3>
+<pre>
+2 5
+</pre>
+(but for example 2 4, 2 6, 2 10, 2 11, etc. are also accepted).
+</table>
+
+</div>
+</body>
+</html>
+

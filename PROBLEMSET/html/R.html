@@ -1,0 +1,124 @@
+<html>
+<head><title>R. Seating order</title></head>
+<body>
+<div align="justify">
+
+<h2>R. Seating order</h2>
+<table border=0 width=100% cellpadding=0 cellspacing=0>
+<tr><td align="justify">
+<p>
+Despite of all the recent efforts for standardization, people are still
+being born with different genomes, resulting in different sizes.
+The relevance to the world of movies is that tall people should not sit before
+short people, because they may block the view.
+
+<p>
+Because the necessary technology is still rather expensive, it's not
+feasible yet to do full genetic screening of every guest when they purchase a
+ticket. Therefore the seating order must be resolved right before the movie
+starts.
+
+<p>
+There is a common "best practice" method that provides good results using
+simple heuristics, while avoiding chaos.  People first sit where their ticket
+says so; then if someone doesn't see the screen, they ask the person sitting in
+front of them to swap seats. Because most people are polite and will not climb
+over a row of seats, they usually stand up and move along the rows and aisles.
+Customers sitting in the same row on adjacent seats may also swap seats, if
+they think this can help the process along. To avoid confusion and mass panic,
+every swap is fully finished before a new one can be started.
+
+<td> &nbsp;&nbsp; <td align="right">
+<img width=250 alt="potential audience: a tall and a short guy" src="audience.jpg">
+<br><font size="-3">source: http://thegraphicsfairy.com/funny-old-photo-tall-man-with-short-man/</font>
+</table>
+
+<p>
+This moving around of viewers is interesting to you since it takes a lot of
+time (longer than the actual movie), and you can show commercials during the
+process.  It is essential to be able to estimate the amount of time you have to fill
+with commercials - which will be proportional to the number of swaps.
+To get a clearer picture on how the process works, you sample 10 audiences,
+and attempt to determine how the shuffling will happen.
+
+<p>
+Data is stored in greyscale PNG files; the darker a pixel is, the
+shorter is the customer sitting there. You need to find a reasonably
+short sequence of swaps that would result in clear view for everyone.
+Your solution will most probably be more efficient (smaller number of
+swaps) than what the guests would do in reality, so it will provide a good
+minimum estimation on how much time you can contract for commercials.
+
+<h3>Scoring</h3>
+For each given input, submissions from all teams are evaluated;
+The score is based on the number of swaps compared to the best submission
+(less is better, too many swaps means 0 score):
+<pre>
+SCORE = 100*(1 - sqrt(1 - BEST/SWAPS))
+</pre>
+
+
+<h3>Input</h3>
+Smallish PNG files containing only grey, black and white pixels. Color
+space of the input may be greyscale or 1 bit black &amp; white or indexed,
+but in any case actual pixels will be at most "256 shades of grey" between
+0 (black) and 255 (white).
+
+<h3>Output</h3>
+First line is an integer that describes the number of swap sequences.
+Each subsequent line is a swap sequence, a list of integers separated by
+spaces, starting with three numbers L, X and Y. L is the number of
+swaps, X and Y are the reference coordinates assuming the top-left pixel
+is at x=0;y=0 and X is the horizontal axis. The rest of the line contains
+swaps. Each swap is described by two numbers: a step direction, which may
+modify the reference coordinate by one and a neighbor direction that
+addresses the other pixel the current one is swapped with. Stepping
+(base coordinate modification) happens before swapping. Swap sequences and
+swaps within a sequence are executed in order of appearance.
+Directions are:
+<p>
+<table align=center border=1>
+<tr> <th> value <th> description    <th> relative address
+<tr> <th> 0     <td> stay in place  <td> x:0 y:0
+<tr> <th> 1     <td> north          <td> x:0 y:-1
+<tr> <th> 2     <td> east           <td> x:+1 y:0
+<tr> <th> 3     <td> south          <td> x:0 y:+1
+<tr> <th> 4     <td> west           <td> x:-1 y:0
+</table>
+<p>
+For example a swap line "2 6 8 0 3 1 2" would first swap pixel x=6;y=8 with
+pixel x=6;y=9 then pixel x=7;y=8 with pixel x=8;y=8, leaving the reference
+coordinate x=7;y=8 at the end of the sequence.
+<p>
+The screen is on the left; a valid output transforms the input image so
+that pixel values are in ascending order from left to right in each row.
+There is no requirement for any sort of vertical arrangement.
+<p>
+Addressing out of the image dimensions for either end of a
+swap is a fatal error (submission not accepted); swapping a pixel with
+itself is legal and will not change the image. Integers in any field are
+between 0 and 2<sup>30</sup>. The usual <i>maximum size of
+submission</i> may limit the number of swaps a valid output file
+can contain. Number of swaps (L) is greater than zero.
+
+
+<table border="0" width="100%" cellpadding=0 cellspacing=0>
+<tr>
+<td valign=top><h3>Example input</h3>
+<img src="0.png">
+
+<td valign=top><h3>Example output</h3>
+<pre>
+5
+2 2 3 0 4 4 4
+2 2 7 0 4 4 4
+1 1 7 0 2
+2 2 8 0 4 4 4
+7 2 8 0 2 2 2 2 2 2 2 2 2 2 2 2 2
+</pre>
+</table>
+
+</div>
+</body>
+</html>
+

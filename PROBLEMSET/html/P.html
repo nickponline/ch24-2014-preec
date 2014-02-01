@@ -1,0 +1,62 @@
+<html>
+<head><title>P. Film logistics</title></head>
+<body>
+<div align="justify">
+
+<h2>P. Film logistics</h2>
+<table border=0 cellpadding=0 cellspacing=0>
+<tr><td align="justify">
+
+You reckon most movies are leaked to torrent sites early on is because someone
+copies the film when it's being sent to a cinema. To minimize this risk, you
+buy only one copy for your cinema network, and after playing it in one cinema
+you send it to the next cinema right away. You always use the shortest path
+between two cinemas. There's a rotation plan, so every cinema has exactly one
+movie to play (movies are all the same length anyway). This way at least you
+know who is to blame when the first torrent appears.
+
+<p>
+The question is: how much does a movie travel until it gets back to the first
+cinema? (This is proportional to the risk that it ends up on torrent sites.)
+
+<td> &nbsp;&nbsp; <td align="right">
+<img width=300 alt="The Earth is modelled as a sphere in this task." src="sphere.jpg">
+<br><font size="-3">source:
+http://commons.wikimedia.org/wiki/File:
+1775_Bonne_Map_or_Chart_of_the_Spheres_and_Compass_Rose_-
+_Geographicus_-_Spheres-bonne-1775.jpg</font>
+</table>
+
+<h3>Input</h3>
+
+A closed path on the surface of the Earth is given with a sequence of
+latitude and longitude coordinates.
+The first line is an integer N, the number of cinemas.
+The following N lines are lat;lon coordinates of each cinema in the order they are visited.
+(After the last cinema the movie returns to the first one).
+Earth is a perfect spherical planet with radius 6371 km.
+
+<h3>Output</h3>
+
+The total travelled distance of a movie in km to at least meter precision.
+
+<table border="0" width="100%" cellpadding=0 cellspacing=0>
+<tr>
+<td valign=top><h3>Example input</h3>
+<pre>
+3
+10 40
+-55.5 111.11
+-18 -70
+</pre>
+
+<td valign=top><h3>Example output</h3>
+<pre>
+34059.938559
+</pre>
+</table>
+
+</div>
+</body>
+</html>
+
