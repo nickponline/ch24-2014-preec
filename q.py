@@ -29,8 +29,8 @@ total = None
 for tf in xrange(500, 10100, 100):
 
 	print tf
-	length = int(44100) # 
-	skip   = 1000 # 0.1s precision
+	length = int(2*tf) # 
+	skip   = 500 # 0.1s precision
 	
 	windows = [data[start:start+length] for start in xrange(0, len(data) - length, skip)] 
 	fourier = np.array([goetrzel(w, tf, sample_rate) for w in windows], dtype=np.float64)
@@ -55,6 +55,7 @@ for tf in xrange(500, 10100, 100):
 	if total is None:
 		total = fourier
 	else:
+		fourier = np.pad(fourier, len(total) - len(fourier), mode='minimum')
 		total += fourier
 
 	pylab.subplot(212)
