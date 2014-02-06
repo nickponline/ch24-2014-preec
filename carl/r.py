@@ -1,5 +1,5 @@
 #!/usr/bin/python
-from scipy.misc import imread
+from scipy.misc import imread,imsave
 import numpy
 import sys
 
@@ -127,4 +127,7 @@ greedy1()
 # TODO: actually write out our swap operations. The greedy ones should form
 # nice lines of linked swaps and be amenable to writing out in an efficient way.
 print 'Done with %d swaps' % (len(ops))
-                
+
+if len(sys.argv) > 2:
+    imsave(sys.argv[2], im)
+
